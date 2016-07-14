@@ -9,22 +9,24 @@ Works for both the 2D and 3D versions of the API.
 ### Usage
 Simply load the module into your code using dojo.require.
 
-# Initialise a new object:
+### Initialise a new object:
 
-```var draw = new freehandDraw(view, gl);```
+```js
+var draw = new freehandDraw(View, GraphicsLayer);
+```
 
 Requires an Esri JavaScript MapView or SceneView and a GraphicsLayer as constructor prameters.
 
-# Call drawFreehand():
+### Call drawFreehand:
 
-```draw.drawFreehand()```
+```js
+draw.drawFreehand()
+```
 
 When this is called, click and drag in the map to draw a freehand polygon.
 
 ### Example
 Here is a quick example to get you started. Just copy the freehandDraw.js file into your project, add the correct dojoConfig parameters to load the module, then just use it in your code as you would a standard dojo widget.
-
-
 
 ```html
 <!DOCTYPE html>
