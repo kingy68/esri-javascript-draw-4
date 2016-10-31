@@ -71,7 +71,7 @@ define([
 
               if ((nextPoint.z !== undefined && view.type === '3d') || view.type === '2d') {
                 rings.push([nextPoint.x, nextPoint.y]);
-                
+
                 // Update the graphic in the graphics layer
                 currentGraphic = new Graphic({
                   geometry: new Polyline({
@@ -96,7 +96,7 @@ define([
               if (view.type === "3d") {
                 view.navigationControls.mouseDragLeft = 'pan';
               } else {
-                view.gestureManager.inputManager.manager.options.enable = false;
+                view.gestureManager.inputManager.manager.options.enable = true;
               }
 
               // Remove the previous line graphic
