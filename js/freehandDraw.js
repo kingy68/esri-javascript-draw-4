@@ -115,6 +115,10 @@ define([
                               view.navigationControls.mouseDragLeft = 'pan';
                           } else {
                               view.gestureManager.inputManager.manager.options.enable = true;
+
+                              // Fix for IE, need to manually simulate the mouse click to stop the mouse sticking
+                              view.gestureManager.inputManager.gestures.click.manager.input.pressed = true;
+                              view.gestureManager.inputManager.gestures.click.manager.input.pressed = false;
                           }
 
                           // Remove the previous line graphic
