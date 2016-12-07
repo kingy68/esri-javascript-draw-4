@@ -17,6 +17,11 @@ define([
               var view = this.view;
               var graphicsLayer = this.graphicsLayer;
 
+              // Reset the rotation if not zero
+              if (view.type != '3d' && view.rotation != 0) {
+                view.rotation = 0;
+              }
+
               require(["dojo/on",
                 "esri/Graphic",
                 "esri/geometry/Point",
@@ -63,7 +68,8 @@ define([
                           view.navigationControls.mouseDragLeft = 'select';
                           handler.pause();
                       } else {
-                          view.gestureManager.inputManager.manager.options.enable = false;
+                          view.gestureManager.inputManager.gestures.drag.options.enable = false;
+                          view.gestureManager.inputManager.gestures.altdrag.options.enable = false;
                       }
 
                       // Get the start point for the temporary line
@@ -114,7 +120,8 @@ define([
                           if (view.type === "3d") {
                               view.navigationControls.mouseDragLeft = 'pan';
                           } else {
-                              view.gestureManager.inputManager.manager.options.enable = true;
+                              view.gestureManager.inputManager.gestures.drag.options.enable = true;
+                              view.gestureManager.inputManager.gestures.altdrag.options.enable = true;
 
                               // Fix for IE, need to manually simulate the mouse click to stop the mouse sticking
                               view.gestureManager.inputManager.gestures.click.manager.input.pressed = true;
