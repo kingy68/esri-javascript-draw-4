@@ -17,6 +17,12 @@ define([
               var view = this.view;
               var graphicsLayer = this.graphicsLayer;
 
+              var handlersToDisable2D = ['esri.views.2d.input.handlers.DragRotate - primary', 'esri.views.2d.input.handlers.DoubleClickZoom',
+                  'esri.views.2d.input.handlers.DragRotate - secondary', 'esri.views.2d.input.handlers.DragPan - primary',
+                  'esri.views.2d.input.handlers.DoubleClickZoom', 'esri.views.2d.input.handlers.PinchZoom',
+                  'esri.views.2d.input.handlers.DragZoom - primary'
+              ];
+
               // Reset the rotation if not zero
               if (view.type != '3d' && view.rotation != 0) {
                 view.rotation = 0;
@@ -68,8 +74,13 @@ define([
                           view.navigationControls.mouseDragLeft = 'select';
                           handler.pause();
                       } else {
-                          view.gestureManager.inputManager.gestures.drag.options.enable = false;
-                          view.gestureManager.inputManager.gestures.altdrag.options.enable = false;
+                          dojo.forEach(view.inputManager._handlers, function(handler) {
+                              for (i = 0; i < handlersToDisable2D.length; i++) {
+                                  if (handler.handler._name == handlersToDisable2D[i]) {
+                                      handler.active = false;
+                                  }
+                              }
+                          });
                       }
 
                       // Get the start point for the temporary line
@@ -120,12 +131,13 @@ define([
                           if (view.type === "3d") {
                               view.navigationControls.mouseDragLeft = 'pan';
                           } else {
-                              view.gestureManager.inputManager.gestures.drag.options.enable = true;
-                              view.gestureManager.inputManager.gestures.altdrag.options.enable = true;
-
-                              // Fix for IE, need to manually simulate the mouse click to stop the mouse sticking
-                              view.gestureManager.inputManager.gestures.click.manager.input.pressed = true;
-                              view.gestureManager.inputManager.gestures.click.manager.input.pressed = false;
+                              dojo.forEach(view.inputManager._handlers, function(handler) {
+                                  for (i = 0; i < handlersToDisable2D.length; i++) {
+                                      if (handler.handler._name == handlersToDisable2D[i]) {
+                                          handler.active = true;
+                                      }
+                                  }
+                              });
                           }
 
                           // Remove the previous line graphic
