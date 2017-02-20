@@ -1,10 +1,10 @@
 # esri-javascript-draw-4
 
-A custom [Esri JavaScript 4.0 API](https://developers.arcgis.com/javascript/) freehand Draw Tool.
+A custom [Esri JavaScript 4.2 API](https://developers.arcgis.com/javascript/) freehand Draw Tool.
 
-Currently the 4.0 API does not contain a [Draw Tool](https://developers.arcgis.com/javascript/3/jsapi/draw-amd.html), therefore this tool can be used and extended to enable draw functionality.
+Currently the 4.2 API does not contain a [Draw Tool](https://developers.arcgis.com/javascript/3/jsapi/draw-amd.html), therefore this tool can be used and extended to enable draw functionality.
 
-Works for both the 2D and 3D versions of the API.
+Currently works for the 2D and 3D version of the 4.2 API.
 
 ### Usage
 Simply load the module into your code using dojo.require.
@@ -47,7 +47,7 @@ Here is a quick example to get you started. Just copy the freehandDraw.js file i
   }
 </style>
 
-<link rel="stylesheet" href="https://js.arcgis.com/4.0/esri/css/main.css">
+<link rel="stylesheet" href="https://js.arcgis.com/4.2/esri/css/main.css">
 <link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dijit/themes/claro/claro.css"/‌​>
 
 <script>
@@ -59,7 +59,7 @@ Here is a quick example to get you started. Just copy the freehandDraw.js file i
     }]
   };
 </script>
-<script src="https://js.arcgis.com/4.0/"></script>
+<script src="https://js.arcgis.com/4.2/"></script>
 
 <script>
   require([
