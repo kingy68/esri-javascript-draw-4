@@ -23,6 +23,8 @@ define([
                   'esri.views.2d.input.handlers.DragZoom - primary'
               ];
 
+              var handlersToDisable3D = ['esri.views.3d.input.handlers.DragRotate', 'esri.views.3d.input.handlers.DragPan'];
+
               // Reset the rotation if not zero
               if (view.type != '3d' && view.rotation != 0) {
                 view.rotation = 0;
@@ -71,8 +73,13 @@ define([
 
                       // We temporarily disable the ability to move the map
                       if (view.type === "3d") {
-                          view.navigationControls.mouseDragLeft = 'select';
-                          handler.pause();
+                          dojo.forEach(view.inputManager.viewEvents.inputManager._handlers, function(handler) {
+                              for (i = 0; i < handlersToDisable3D.length; i++) {
+                                  if (handler.handler._name== handlersToDisable3D[i]) {
+                                      handler.active = false;
+                                  }
+                              }
+                          });
                       } else {
                           dojo.forEach(view.inputManager._handlers, function(handler) {
                               for (i = 0; i < handlersToDisable2D.length; i++) {
@@ -129,7 +136,13 @@ define([
 
                           // Enable movement of the map again
                           if (view.type === "3d") {
-                              view.navigationControls.mouseDragLeft = 'pan';
+                              dojo.forEach(view.inputManager.viewEvents.inputManager._handlers, function(handler) {
+                                  for (i = 0; i < handlersToDisable3D.length; i++) {
+                                      if (handler.handler._name== handlersToDisable3D[i]) {
+                                          handler.active = true;
+                                      }
+                                  }
+                              });
                           } else {
                               dojo.forEach(view.inputManager._handlers, function(handler) {
                                   for (i = 0; i < handlersToDisable2D.length; i++) {
