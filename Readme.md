@@ -6,6 +6,9 @@ Currently the 4.2 API does not contain a [Draw Tool](https://developers.arcgis.c
 
 Currently works for the 2D and 3D version of the 4.2 API.
 
+### Live Demo
+https://kingy68.github.io/esri-javascript-draw-4/
+
 ### Usage
 Simply load the module into your code using dojo.require.
 
