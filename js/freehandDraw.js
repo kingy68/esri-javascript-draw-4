@@ -17,18 +17,9 @@ define([
               var view = this.view;
               var graphicsLayer = this.graphicsLayer;
 
-              var handlersToDisable2D = ['esri.views.2d.input.handlers.DragRotate - primary', 'esri.views.2d.input.handlers.DoubleClickZoom',
-                  'esri.views.2d.input.handlers.DragRotate - secondary', 'esri.views.2d.input.handlers.DragPan - primary',
-                  'esri.views.2d.input.handlers.DoubleClickZoom', 'esri.views.2d.input.handlers.PinchZoom',
-                  'esri.views.2d.input.handlers.DragZoom - primary'
-              ];
+              var handlersToKeep2D = ['esri.views.2d.input.handlers.MouseWheelZoom'];
 
-              var handlersToDisable3D = ['esri.views.3d.input.handlers.DragRotate', 'esri.views.3d.input.handlers.DragPan'];
-
-              // Reset the rotation if not zero
-              if (view.type != '3d' && view.rotation != 0) {
-                view.rotation = 0;
-              }
+              var handlersToKeep3D = ['esri.views.3d.input.handlers.MouseWheelZoom'];
 
               require(["dojo/on",
                 "esri/Graphic",
@@ -74,18 +65,14 @@ define([
                       // We temporarily disable the ability to move the map
                       if (view.type === "3d") {
                           dojo.forEach(view.inputManager.viewEvents.inputManager._handlers, function(handler) {
-                              for (i = 0; i < handlersToDisable3D.length; i++) {
-                                  if (handler.handler._name== handlersToDisable3D[i]) {
-                                      handler.active = false;
-                                  }
+                              if (!(handler.handler._name in handlersToKeep3D)) {
+                                  handler.active = false;
                               }
                           });
                       } else {
-                          dojo.forEach(view.inputManager._handlers, function(handler) {
-                              for (i = 0; i < handlersToDisable2D.length; i++) {
-                                  if (handler.handler._name == handlersToDisable2D[i]) {
-                                      handler.active = false;
-                                  }
+                          dojo.forEach(view.inputManager._inputManager._handlers, function(handler) {
+                              if (!(handler.handler._name in handlersToKeep2D)) {
+                                  handler.active = false;
                               }
                           });
                       }
@@ -137,18 +124,14 @@ define([
                           // Enable movement of the map again
                           if (view.type === "3d") {
                               dojo.forEach(view.inputManager.viewEvents.inputManager._handlers, function(handler) {
-                                  for (i = 0; i < handlersToDisable3D.length; i++) {
-                                      if (handler.handler._name== handlersToDisable3D[i]) {
-                                          handler.active = true;
-                                      }
+                                  if (!handler.active) {
+                                      handler.active = true;
                                   }
                               });
                           } else {
-                              dojo.forEach(view.inputManager._handlers, function(handler) {
-                                  for (i = 0; i < handlersToDisable2D.length; i++) {
-                                      if (handler.handler._name == handlersToDisable2D[i]) {
-                                          handler.active = true;
-                                      }
+                              dojo.forEach(view.inputManager._inputManager._handlers, function(handler) {
+                                  if (!handler.active) {
+                                      handler.active = true;
                                   }
                               });
                           }
